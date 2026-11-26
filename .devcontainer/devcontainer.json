@@ -1,0 +1,30 @@
+{
+  "name": "PySide6 GUI Environment",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11-bookworm",
+  
+  // Instala e inicia automaticamente Xvfb (:1), Fluxbox, x11vnc e noVNC (porta 6080)
+  "features": {
+    "ghcr.io/devcontainers/features/desktop-lite:1": {
+      "password": "vscode"
+    }
+  },
+
+  
+  // Instala apenas as bibliotecas XCB/OpenGL exigidas pelo Qt6 e o PySide6
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libxcb-cursor0 libxcb-xinerama0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-shape0 libxkbcommon-x11-0 libgl1 libegl1 libdbus-1-3 && pip install --no-cache-dir PySide6",
+
+
+  // Configura a porta do noVNC para abrir automaticamente com rótulo
+  "portsAttributes": {
+    "6080": {
+      "label": "noVNC Desktop",
+      "onAutoForward": "notify"
+    }
+  },
+
+  // Define a variável DISPLAY globalmente para todo o ambiente
+  "containerEnv": {
+    "DISPLAY": ":1",
+    "LIBGL_ALWAYS_SOFTWARE": "1"
+  }
+}
